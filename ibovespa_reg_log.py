@@ -10,19 +10,18 @@ df = pd.read_csv('data/ABT_IBOVESPA.csv')
 # OUT OF TIME
 oot = df.tail(30)
 
-X_oot = oot.drop(columns=['Fechamento', 'Data', 'Var%', 'Último'])
+X_oot = oot.drop(columns=['Fechamento', 'Máxima', 'Mínima', 'Data', 'Var%', 'Último', 'Abertura'])
 y_oot = oot['Fechamento']
 
 # NOVO DATAFRAME SEM OOT
 df = df.iloc[:-30]
 # %%
-X = df.drop(columns=['Fechamento', 'Data', 'Var%', 'Último'])
+X = df.drop(columns=['Fechamento', 'Máxima', 'Mínima', 'Data', 'Var%', 'Último', 'Abertura'])
 y = df['Fechamento']
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
-# %%
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)
 # %%
 X_train.isna().sum()
 # %%
@@ -90,6 +89,7 @@ joblib.dump(reg, 'modelo_log_reg_ibovespa.pkl')
 df_predict = y_oot.to_frame()
 df_predict['Predict Reg Log'] = reg.predict(X_oot_scaled)
 df_predict['Proba Reg Log'] = reg.predict_proba(X_oot_scaled)[:,1]
+df_predict
 # %%
 import numpy as np
 from scipy.special import expit  # Função sigmoide
