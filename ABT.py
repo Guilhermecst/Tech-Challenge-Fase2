@@ -58,6 +58,27 @@ df['Mínima_Lag1'] = df['Mínima'].shift(1)
 df['Volume_Lag1'] = df['Vol.'].shift(1)
 df['Fechamento_Lag1'] = df['Fechamento'].shift(1)
 
+# Médias móveis de 5 dias
+df['Abertura_Media5'] = df['Abertura'].rolling(window=5).mean()
+df['Máxima_Media5'] = df['Máxima'].rolling(window=5).mean()
+df['Mínima_Media5'] = df['Mínima'].rolling(window=5).mean()
+df['Fechamento_Media5'] = df['Fechamento'].rolling(window=5).mean()
+df['Volume_Media5'] = df['Vol.'].rolling(window=5).mean()
+
+# Médias móveis de 10 dias
+df['Abertura_Media10'] = df['Abertura'].rolling(window=10).mean()
+df['Máxima_Media10'] = df['Máxima'].rolling(window=10).mean()
+df['Mínima_Media10'] = df['Mínima'].rolling(window=10).mean()
+df['Fechamento_Media10'] = df['Fechamento'].rolling(window=10).mean()
+df['Volume_Media10'] = df['Vol.'].rolling(window=10).mean()
+
+# Médias móveis de 15 dias
+df['Abertura_Media15'] = df['Abertura'].rolling(window=15).mean()
+df['Máxima_Media15'] = df['Máxima'].rolling(window=15).mean()
+df['Mínima_Media15'] = df['Mínima'].rolling(window=15).mean()
+df['Fechamento_Media15'] = df['Fechamento'].rolling(window=15).mean()
+df['Volume_Media15'] = df['Vol.'].rolling(window=15).mean()
+
 # Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1']  = (df['Abertura'] - df['Último']).shift(1)
 # %%
