@@ -51,6 +51,7 @@ df['Fechamento'].value_counts()
 # %%
 # Separa os últimos 30 registros para teste
 df = df.sort_values('Data')
+
 # LAGS - 1 dia
 df['Abertura_Lag1'] = df['Abertura'].shift(1)
 df['Máxima_Lag1'] = df['Máxima'].shift(1)
