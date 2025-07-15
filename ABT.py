@@ -35,9 +35,13 @@ def converter_volume(vol):
 # Aplica no DataFrame
 df['Vol.'] = df['Vol.'].apply(converter_volume)
 # %%
+df.info()
+# %%
 df['Var%'] = df['Var%'].str.replace(',', '.', regex=False)
 df['Var%'] = df['Var%'].str.replace('%', '', regex=False)
 df['Var%'] = df['Var%'].astype(float)
+# %%
+df.info()
 # %%
 df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0 else 0)
 # 1 = Positivo
@@ -53,11 +57,6 @@ df['Máxima_Lag1'] = df['Máxima'].shift(1)
 df['Mínima_Lag1'] = df['Mínima'].shift(1)
 df['Volume_Lag1'] = df['Vol.'].shift(1)
 df['Fechamento_Lag1'] = df['Fechamento'].shift(1)
-
-# LAGS - 3 dias
-df['Abertura_Lag3_média'] = df['Abertura'].shift(1).rolling(window=3).mean()
-df['Volume_Lag3_média'] = df['Vol.'].shift(1).rolling(window=3).mean()
-df['Fechamento_Lag3_media'] = df['Fechamento'].shift(1).rolling(window=3).mean()
 
 # Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1']  = (df['Abertura'] - df['Último']).shift(1)

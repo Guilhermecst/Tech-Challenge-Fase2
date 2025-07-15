@@ -21,7 +21,7 @@ y = df['Fechamento']
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, stratify=y, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 # %%
 # %%
 X_train.isna().sum()
@@ -73,7 +73,6 @@ auc_train = metrics.roc_auc_score(y_train, reg.predict_proba(X_train_scaled)[:,1
 auc_oot = metrics.roc_auc_score(y_oot, reg.predict_proba(X_oot_scaled)[:,1])
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 plt.plot(roc_test[0], roc_test[1])
 plt.plot(roc_train[0], roc_train[1])
