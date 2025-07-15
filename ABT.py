@@ -1,8 +1,9 @@
 # %%
 import pandas as pd
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
+import seaborn as sns
 # %%
-df = pd.read_csv('data/Dados Históricos - Ibovespa.csv', quotechar='"', sep=',')
+df = pd.read_csv('data/Dados Históricos - Ibovespa 2006.csv', quotechar='"', sep=',')
 # %%
 df.head()
 # %%
@@ -31,7 +32,6 @@ def converter_volume(vol):
             return float(vol)  # caso não tenha letra no final
         except ValueError:
             return None  # erro de conversão
-
 # Aplica no DataFrame
 df['Vol.'] = df['Vol.'].apply(converter_volume)
 # %%
@@ -59,8 +59,7 @@ df['Abertura_Lag3_média'] = df['Abertura'].shift(1).rolling(window=3).mean()
 df['Volume_Lag3_média'] = df['Vol.'].shift(1).rolling(window=3).mean()
 df['Fechamento_Lag3_media'] = df['Fechamento'].shift(1).rolling(window=3).mean()
 
-# Range e variação do dia anterior
-df['Range_Lag1']  = (df['Máxima'] - df['Mínima']).shift(1)
+# Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1']  = (df['Abertura'] - df['Último']).shift(1)
 # %%
 df.isna().sum()
@@ -68,6 +67,18 @@ df.isna().sum()
 df = df.dropna().reset_index(drop=True)
 # %%
 df.head()
+# %%
+df.describe()
+# %%
+df['Fechamento'].value_counts()
+# %%
+sns.countplot(x='Fechamento', data=df, hue='Fechamento')
+plt.grid(axis='y')
+plt.title('Distribuição da variável resposta')
+plt.legend(title='Target', bbox_to_anchor=(1, 1), loc='upper left')
+plt.tight_layout()
+plt.ylabel(None)
+plt.show()
 # %%
 df.to_csv('data/ABT_IBOVESPA.csv', index=False)
 # %%
