@@ -1,9 +1,6 @@
 # %%
 import yfinance as yf
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 # %%
 # Define o ticker do IBOV e período
 ticker = '^BVSP'
@@ -32,7 +29,6 @@ df['Var%'] = df['Último'].pct_change() * 100
 
 # Variável target
 df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0 else 0)
-
 # %%
 # Lags
 df['Abertura_Lag1'] = df['Abertura'].shift(1)
@@ -51,20 +47,22 @@ for n in [5, 10, 15]:
 
 # Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1'] = (df['Abertura'] - df['Último']).shift(1)
-
 # %%
 # Remove colunas não necessárias
-df_modelo = df.drop(columns=['Data', 'Var%', 'Último', 'Abertura', 'Máxima', 'Mínima', 'Vol.'])
+df_modelo = df.drop(columns=['Fechamento', 'Var%', 'Último', 'Abertura', 'Máxima', 'Mínima', 'Vol.'])
 
 # Remove nulos
 df_modelo = df_modelo.dropna().reset_index(drop=True)
 
-# %%
-# %%
-df_modelo = df_modelo.drop(index=1)  # Remove a linha de índice 1
-# Exibe info final
-print(df_modelo.info())
-print(df_modelo.tail())
+# Remove multiíndice nas colunas
+df_modelo.columns = df_modelo.columns.get_level_values(-2)
 
+# Remove índice nomeado (ex: 'Ticker') e reseta o índice numérico
+df_modelo = df_modelo.reset_index(drop=True)
+# %%
+df_modelo.tail(1)
+# %%
+data_hoje = df_modelo.tail(1)
 # Exporta para uso no modelo
-df_modelo.to_csv('data/ABT_IBOV_AUTOMATICO.csv', index=False)
+data_hoje.to_csv('data/ABT_IBOV_AUTOMATICO.csv', index=False)
+# %%
