@@ -137,18 +137,97 @@ O pré-processamento e criação da base analítica foram realizados no script `
 ├── ibovespa_tree.py            # Treinamento e avaliação do modelo de árvore
 ├── ibovespa_random_forest.py   # Treinamento e avaliação do modelo de Random Forest
 ├── ibovespa_reg_log.py         # Treinamento e avaliação do modelo de Regressão Logística
+├── gera_dados_atuais.py        # Retorna um df com os dados do dia anterior
+├── previsao_atual.py           # Preve o fechamento do dia atual
 ├── data/                       # Dados brutos e tratados
 ├── README.md                   # Documentação do projeto
 ```
 
 ---
 
-## 💻 Para testar
-1. Baixe os arquivos `modelo_log_reg_ibovespa.pkl`, `scaler_ibovespa.pkl`, `gera_dados_atuais.py` e `previsao_atual.py`;
-2. Rode primeiro `gera_dados_atuais.py` para gerar os dados do dia anterior;
-3. Depois rode o `previsao_atual.py`.
+## 📌 Para Testar
 
-A saída deve ser Previsão para [`DATA`]: Alta ou Baixa
+Siga o passo a passo abaixo para rodar o projeto localmente e prever se o IBOVESPA fechará em alta ou baixa no dia atual com base nos dados históricos:
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
+```
+
+> Substitua `seu-usuario/seu-repositorio` pela URL correta do seu repositório.
+
+---
+
+### 2. Crie e ative um ambiente virtual (opcional, mas recomendado)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate     # Windows
+```
+
+---
+
+### 3. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+> Caso ainda não tenha, crie um `requirements.txt` com as bibliotecas usadas no projeto, como:
+
+```txt
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+```
+
+---
+
+### 4. Gere os dados mais recentes
+
+Execute o script que prepara os dados do dia anterior com as transformações adequadas:
+
+```bash
+python gera_dados_atuais.py
+```
+
+---
+
+### 5. Execute a previsão
+
+Rode o script de previsão com o modelo treinado:
+
+```bash
+python previsao_atual.py
+```
+
+A saída será algo como:
+
+```
+Previsão para o fechamento do dia: 1 (Alta)
+```
+
+ou
+
+```
+Previsão para o fechamento do dia: 0 (Baixa)
+```
+
+---
+
+### ✅ Observações
+
+- Verifique se os arquivos do modelo (`modelo_reg_log.pkl`) e do scaler (`scaler.pkl`) estão presentes no caminho correto.
+- Caso deseje treinar novamente os modelos, utilize os scripts:
+  - `ibovespa_tree.py`
+  - `ibovespa_random_forest.py`
+  - `ibovespa_reg_log.py`
 
 ---
 
