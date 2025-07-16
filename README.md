@@ -143,6 +143,15 @@ O pré-processamento e criação da base analítica foram realizados no script `
 
 ---
 
+## 💻 Para testar
+1. Baixe os arquivos `modelo_log_reg_ibovespa.pkl`, `scaler_ibovespa.pkl`, `gera_dados_atuais.py` e `previsao_atual.py`;
+2. Rode primeiro `gera_dados_atuais.py` para gerar os dados do dia anterior;
+3. Depois rode o `previsao_atual.py`.
+
+A saída deve ser Previsão para [`DATA`]: Alta ou Baixa
+
+---
+
 ## 👤 Autor
 
 Projeto desenvolvido por Guilherme Costa Silva.
