@@ -10,13 +10,13 @@ df = pd.read_csv('data/ABT_IBOVESPA.csv')
 # OUT OF TIME
 oot = df.tail(30)
 
-X_oot = oot.drop(columns=['Fechamento', 'Máxima', 'Mínima', 'Data', 'Var%', 'Último', 'Abertura'])
+X_oot = oot.drop(columns=['Fechamento'])
 y_oot = oot['Fechamento']
 
 # NOVO DATAFRAME SEM OOT
 df = df.iloc[:-30]
 # %%
-X = df.drop(columns=['Fechamento', 'Máxima', 'Mínima', 'Data', 'Var%', 'Último', 'Abertura'])
+X = df.drop(columns=['Fechamento'])
 y = df['Fechamento']
 # %%
 from sklearn.model_selection import train_test_split

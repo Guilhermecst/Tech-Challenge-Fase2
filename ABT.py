@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 # %%
-df = pd.read_csv('data/Dados Históricos - Ibovespa 2006.csv', quotechar='"', sep=',')
+df = pd.read_csv('data/Dados Históricos - Ibovespa 30 dias.csv', quotechar='"', sep=',')
 # %%
 df.head()
 # %%
@@ -83,6 +83,8 @@ df['Volume_Media15'] = df['Vol.'].rolling(window=15).mean()
 # Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1']  = (df['Abertura'] - df['Último']).shift(1)
 # %%
+df.drop(columns=['Máxima', 'Mínima', 'Data', 'Var%', 'Último', 'Abertura', 'Vol.'], inplace=True)
+# %%
 df.isna().sum()
 # %%
 df = df.dropna().reset_index(drop=True)
@@ -101,5 +103,5 @@ plt.tight_layout()
 plt.ylabel(None)
 plt.show()
 # %%
-df.to_csv('data/ABT_IBOVESPA.csv', index=False)
+df.to_csv('data/ABT_TESTE.csv', index=False)
 # %%
