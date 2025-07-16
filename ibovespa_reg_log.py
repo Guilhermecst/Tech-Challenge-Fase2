@@ -85,6 +85,7 @@ plt.legend([f'Teste: {auc_test:.2f}', f'Treino: {auc_train:.2f}', f'OOT: {auc_oo
 plt.show()
 # %%
 joblib.dump(reg, 'modelo_log_reg_ibovespa.pkl')
+joblib.dump(scaler, 'scaler_ibovespa.pkl')
 # %%
 df_predict = y_oot.to_frame()
 df_predict['Predict Reg Log'] = reg.predict(X_oot_scaled)

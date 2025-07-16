@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 # %%
-df = pd.read_csv('data/Dados Históricos - Ibovespa 30 dias.csv', quotechar='"', sep=',')
+df = pd.read_csv('data/Dados Históricos - Ibovespa 2006.csv', quotechar='"', sep=',')
 # %%
 df.head()
 # %%
