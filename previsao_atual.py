@@ -35,4 +35,4 @@ if previsao[0] == 1:
 else:
     fechamento = 'Baixa'
 
-print(f"Previsão para {df['Data'].values}: {fechamento}")
+print(f"Previsão de fechamento para {df['Data'].values}: {fechamento}")
