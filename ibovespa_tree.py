@@ -8,13 +8,13 @@ df = pd.read_csv('data/ABT_IBOVESPA.csv')
 # %%
 oot = df.tail(30)
 
-X_oot = oot.drop(columns=['Fechamento', 'Data', 'Var%', 'Último'])
+X_oot = oot.drop(columns=['Fechamento'])
 y_oot = oot['Fechamento']
 
 # NOVO DATAFRAME SEM OOT
 df = df.iloc[:-30]
 # %%
-X = df.drop(columns=['Fechamento', 'Data', 'Var%', 'Último'])
+X = df.drop(columns=['Fechamento'])
 y = df['Fechamento']
 # %%
 from sklearn.model_selection import train_test_split

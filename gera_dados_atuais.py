@@ -28,13 +28,14 @@ df = df.sort_values('Data')
 df['Var%'] = df['Último'].pct_change() * 100
 
 # Variável target
-df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0 else 0)
+df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0 else 0).shift(-1)
 # %%
 # Lags
 df['Abertura_Lag1'] = df['Abertura'].shift(1)
 df['Máxima_Lag1'] = df['Máxima'].shift(1)
 df['Mínima_Lag1'] = df['Mínima'].shift(1)
 df['Volume_Lag1'] = df['Vol.'].shift(1)
+df['Último_Lag1'] = df['Último'].shift(1)
 df['Fechamento_Lag1'] = df['Fechamento'].shift(1)
 
 # Médias móveis de 5 dias
@@ -50,7 +51,9 @@ df['Variação_Dia_Anterior_Lag1'] = (df['Abertura'] - df['Último']).shift(1)
 # %%
 # Remove colunas não necessárias
 df_modelo = df.drop(columns=['Fechamento', 'Var%', 'Último', 'Abertura', 'Máxima', 'Mínima', 'Vol.'])
-
+# %%
+df_modelo.tail(1)
+# %%
 # Remove nulos
 df_modelo = df_modelo.dropna().reset_index(drop=True)
 
@@ -59,6 +62,8 @@ df_modelo.columns = df_modelo.columns.get_level_values(-2)
 
 # Remove índice nomeado (ex: 'Ticker') e reseta o índice numérico
 df_modelo = df_modelo.reset_index(drop=True)
+# %%
+df_modelo.tail(3)
 # %%
 df_modelo.tail(1)
 # %%
