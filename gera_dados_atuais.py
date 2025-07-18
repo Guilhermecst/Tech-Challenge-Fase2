@@ -39,15 +39,17 @@ df['Último_Lag1'] = df['Último'].shift(1)
 df['Fechamento_Lag1'] = df['Fechamento'].shift(1)
 
 # Médias móveis de 5 dias
-for n in [5, 10, 15]:
+for n in [5, 10]:
     df[f'Abertura_Media{n}'] = df['Abertura'].rolling(window=n).mean()
     df[f'Máxima_Media{n}'] = df['Máxima'].rolling(window=n).mean()
     df[f'Mínima_Media{n}'] = df['Mínima'].rolling(window=n).mean()
     df[f'Fechamento_Media{n}'] = df['Fechamento'].rolling(window=n).mean()
     df[f'Volume_Media{n}'] = df['Vol.'].rolling(window=n).mean()
+    df[f'Volatilidade{n}'] = df['Var%'].rolling(n).std()
 
 # Variação do dia anterior
 df['Variação_Dia_Anterior_Lag1'] = (df['Abertura'] - df['Último']).shift(1)
+df['Tendencia_5_10'] = df['Fechamento_Media5'] - df['Fechamento_Media10']
 # %%
 # Remove colunas não necessárias
 df_modelo = df.drop(columns=['Fechamento', 'Var%', 'Último', 'Abertura', 'Máxima', 'Mínima', 'Vol.'])
