@@ -64,36 +64,33 @@ O pré-processamento e criação da base analítica foram realizados no script `
 4. **Criação de variáveis defasadas (`lag`)**  
    Inclusão de variáveis do dia anterior para enriquecer o modelo:
    ```python
-    # LAGS - 1 dia
-    df['Abertura_Lag1'] = df['Abertura'].shift(1)
-    df['Máxima_Lag1'] = df['Máxima'].shift(1)
-    df['Mínima_Lag1'] = df['Mínima'].shift(1)
-    df['Volume_Lag1'] = df['Vol.'].shift(1)
-    df['Fechamento_Lag1'] = df['Fechamento'].shift(1)
+    # %% LAGS - 1 dia
+    df['Abertura_Lag1'] = df['Abertura'].shift(1) # Abertura do dia anterior
+    df['Máxima_Lag1'] = df['Máxima'].shift(1) # Máxima do dia anterior
+    df['Mínima_Lag1'] = df['Mínima'].shift(1) # Mínima do dia anterior
+    df['Volume_Lag1'] = df['Vol.'].shift(1) # Volume do dia anterior
+    df['Último_Lag1'] = df['Último'].shift(1) # Preço do dia anterior
+    df['Fechamento_Lag1'] = df['Fechamento'].shift(1) # Fechamento do dia anterior (alta/baixa)
 
     # Médias móveis de 5 dias
-    df['Abertura_Media5'] = df['Abertura'].rolling(window=5).mean()
-    df['Máxima_Media5'] = df['Máxima'].rolling(window=5).mean()
-    df['Mínima_Media5'] = df['Mínima'].rolling(window=5).mean()
-    df['Fechamento_Media5'] = df['Fechamento'].rolling(window=5).mean()
-    df['Volume_Media5'] = df['Vol.'].rolling(window=5).mean()
+    df['Abertura_Media5'] = df['Abertura'].rolling(window=5).mean() # Média da abertura dos últimos 5 dias de pregão
+    df['Máxima_Media5'] = df['Máxima'].rolling(window=5).mean() # Média da máxima dos últimos 5 dias de pregão
+    df['Mínima_Media5'] = df['Mínima'].rolling(window=5).mean() # Média da mínima dos últimos 5 dias de pregão
+    df['Fechamento_Media5'] = df['Fechamento'].rolling(window=5).mean() # # Média do fechamento dos últimos 5 dias de pregão
+    df['Volume_Media5'] = df['Vol.'].rolling(window=5).mean() # Média do volume dos últimos 5 dias de pregão
+    df['Volatilidade5'] = df['Var%'].rolling(5).std() # Oscilação da variação percentual dos últimos 5 pregões
 
     # Médias móveis de 10 dias
-    df['Abertura_Media10'] = df['Abertura'].rolling(window=10).mean()
-    df['Máxima_Media10'] = df['Máxima'].rolling(window=10).mean()
-    df['Mínima_Media10'] = df['Mínima'].rolling(window=10).mean()
-    df['Fechamento_Media10'] = df['Fechamento'].rolling(window=10).mean()
-    df['Volume_Media10'] = df['Vol.'].rolling(window=10).mean()
-
-    # Médias móveis de 15 dias
-    df['Abertura_Media15'] = df['Abertura'].rolling(window=15).mean()
-    df['Máxima_Media15'] = df['Máxima'].rolling(window=15).mean()
-    df['Mínima_Media15'] = df['Mínima'].rolling(window=15).mean()
-    df['Fechamento_Media15'] = df['Fechamento'].rolling(window=15).mean()
-    df['Volume_Media15'] = df['Vol.'].rolling(window=15).mean()
+    df['Abertura_Media10'] = df['Abertura'].rolling(window=10).mean() # Média da abertura dos últimos 10 dias de pregão
+    df['Máxima_Media10'] = df['Máxima'].rolling(window=10).mean()# Média da máxima dos últimos 10 dias de pregão
+    df['Mínima_Media10'] = df['Mínima'].rolling(window=10).mean() # Média da mínima dos últimos 10 dias de pregão
+    df['Fechamento_Media10'] = df['Fechamento'].rolling(window=10).mean() # Média do fechamento dos últimos 10 dias de pregão
+    df['Volume_Media10'] = df['Vol.'].rolling(window=10).mean() # Média do volume dos últimos 10 dias de pregão
+    df['Volatilidade10'] = df['Var%'].rolling(10).std() # # Oscilação da variação percentual dos últimos 5 pregões
 
     # Variação do dia anterior
-    df['Variação_Dia_Anterior_Lag1']  = (df['Abertura'] - df['Último']).shift(1)
+    df['Variação_Dia_Anterior_Lag1'] = (df['Abertura'] - df['Último']).shift(1) # Variação absoluta do dia anterior
+    df['Tendencia_5_10'] = df['Fechamento_Media5'] - df['Fechamento_Media10'] # Diferença entre médias móveis de 5 e 10 dias
    ```
 
 ---
