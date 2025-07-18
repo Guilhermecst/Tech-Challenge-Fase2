@@ -5,44 +5,53 @@ from sklearn import metrics
 import joblib
 import matplotlib.pyplot as plt
 # %% Leitura da base final
-df = pd.read_csv('data/ABT_IBOVESPA_DIA_SEGUINTE.csv')
-
+df = pd.read_csv('data/ABT_IBOVESPA.csv')
 # %% Separação OUT OF TIME
 oot = df.tail(30)
 X_oot = oot.drop(columns=['Fechamento'])
 y_oot = oot['Fechamento']
 df = df.iloc[:-30]
-
 # %% Separação treino/teste
 X = df.drop(columns=['Fechamento'])
 y = df['Fechamento']
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)
 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 # %% Normalização
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 X_oot_scaled = scaler.transform(X_oot)
-
 # %% Regressão Logística
 reg = LogisticRegression(class_weight='balanced')
 reg.fit(X_train_scaled, y_train)
-
-# %% Avaliação do modelo
+# %% Avaliação do modelo - TESTE
 reg_predict = reg.predict(X_test_scaled)
 reg_predict_proba = reg.predict_proba(X_test_scaled)
 
 df_predict = y_test.to_frame()
 df_predict['Predict Reg Log'] = reg_predict
 df_predict['Proba Reg Log'] = reg_predict_proba[:, 1]
+# %%
+# Matriz de Correlação
+pd.crosstab(df_predict['Fechamento'], df_predict['Predict Reg Log'])
+# %% Avaliação do modelo - OOT
+reg_predict_oot = reg.predict(X_oot_scaled)
+reg_predict_proba_oot = reg.predict_proba(X_oot_scaled)
 
+df_predict_oot = y_oot.to_frame()
+df_predict_oot['Predict Reg Log'] = reg_predict_oot
+df_predict_oot['Proba Reg Log'] = reg_predict_proba_oot[:, 1]
+# %%
+# Matriz de Correlação
+pd.crosstab(df_predict_oot['Fechamento'], df_predict_oot['Predict Reg Log'])
+# %%
+df_predict_oot
 # %% Acurácias
 print('Acurácia TESTE:', metrics.accuracy_score(y_test, reg_predict) * 100)
 print('Acurácia TREINO:', metrics.accuracy_score(y_train, reg.predict(X_train_scaled)) * 100)
 print('Acurácia OOT:', metrics.accuracy_score(y_oot, reg.predict(X_oot_scaled)) * 100)
-
 # %% ROC AUC
 roc_test = metrics.roc_curve(y_test, df_predict['Proba Reg Log'])
 roc_train = metrics.roc_curve(y_train, reg.predict_proba(X_train_scaled)[:, 1])
@@ -61,7 +70,6 @@ plt.xlabel('1 - Especificidade')
 plt.ylabel('Recall')
 plt.legend([f'Teste: {auc_test:.2f}', f'Treino: {auc_train:.2f}', f'OOT: {auc_oot:.2f}'])
 plt.show()
-
 # %% Exporta modelo
 joblib.dump(reg, 'modelo_log_reg_ibovespa.pkl')
 joblib.dump(scaler, 'scaler_ibovespa.pkl')

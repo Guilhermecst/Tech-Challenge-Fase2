@@ -84,3 +84,13 @@ plt.ylabel('Recall')
 plt.legend([f'Teste: {auc_test:.2f}', f'Treino: {auc_train:.2f}', f'OOT: {auc_oot:.2f}'])
 plt.show()
 # %%
+# FEATURE IMPORTANCE
+importancias = rf.feature_importances_
+nomes_variaveis = X.columns
+
+# Criar DataFrame para visualização
+importancias_df = pd.DataFrame({'Feature': nomes_variaveis, 'Importância': importancias * 100})
+importancias_df = importancias_df.sort_values(by='Importância', ascending=True)
+# %%
+importancias_df
+# %%
