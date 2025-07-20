@@ -53,9 +53,9 @@ df['Fechamento'].value_counts()
 df['Abertura_Lag1'] = df['Abertura'].shift(1) # Abertura do dia anterior
 df['Máxima_Lag1'] = df['Máxima'].shift(1) # Máxima do dia anterior
 df['Mínima_Lag1'] = df['Mínima'].shift(1) # Mínima do dia anterior
+df['Fechamento_Lag1'] = df['Fechamento'].shift(1) # Fechamento do dia anterior (alta/baixa)
 df['Volume_Lag1'] = df['Vol.'].shift(1) # Volume do dia anterior
 df['Último_Lag1'] = df['Último'].shift(1) # Preço do dia anterior
-df['Fechamento_Lag1'] = df['Fechamento'].shift(1) # Fechamento do dia anterior (alta/baixa)
 
 # Médias móveis de 5 dias
 df['Abertura_Media5'] = df['Abertura'].rolling(window=5).mean() # Média da abertura dos últimos 5 dias de pregão
@@ -63,6 +63,7 @@ df['Máxima_Media5'] = df['Máxima'].rolling(window=5).mean() # Média da máxim
 df['Mínima_Media5'] = df['Mínima'].rolling(window=5).mean() # Média da mínima dos últimos 5 dias de pregão
 df['Fechamento_Media5'] = df['Fechamento'].rolling(window=5).mean() # # Média do fechamento dos últimos 5 dias de pregão
 df['Volume_Media5'] = df['Vol.'].rolling(window=5).mean() # Média do volume dos últimos 5 dias de pregão
+df['Último_Media5'] = df['Último'].rolling(window=5).mean() # Média do preço dos últimos 5 dias de pregão
 df['Volatilidade5'] = df['Var%'].rolling(5).std() # Oscilação da variação percentual dos últimos 5 pregões
 
 # Médias móveis de 10 dias
@@ -71,6 +72,7 @@ df['Máxima_Media10'] = df['Máxima'].rolling(window=10).mean()# Média da máxi
 df['Mínima_Media10'] = df['Mínima'].rolling(window=10).mean() # Média da mínima dos últimos 10 dias de pregão
 df['Fechamento_Media10'] = df['Fechamento'].rolling(window=10).mean() # Média do fechamento dos últimos 10 dias de pregão
 df['Volume_Media10'] = df['Vol.'].rolling(window=10).mean() # Média do volume dos últimos 10 dias de pregão
+df['Último_Media10'] = df['Último'].rolling(window=10).mean() # Média do preço dos últimos 10 dias de pregão
 df['Volatilidade10'] = df['Var%'].rolling(10).std() # # Oscilação da variação percentual dos últimos 5 pregões
 
 # Variação do dia anterior
