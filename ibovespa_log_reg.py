@@ -30,13 +30,30 @@ reg.fit(X_train_scaled, y_train)
 # %% Avaliação do modelo - TESTE
 reg_predict = reg.predict(X_test_scaled)
 reg_predict_proba = reg.predict_proba(X_test_scaled)
+# %%
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold
+from sklearn.metrics import make_scorer, accuracy_score
 
+# K-Fold com 6 divisões
+kfold = KFold(n_splits=6, shuffle=True, random_state=42)
+
+# Usar acurácia como métrica
+accuracy = make_scorer(accuracy_score)
+
+# Calcular acurácia com validação cruzada
+result = cross_val_score(reg, X_train_scaled, y_train, cv=kfold, scoring=accuracy)
+
+# Mostrar resultados
+print(f'K-Fold Accuracy Scores: {result}')
+print(f'Mean Accuracy for Cross-Validation K-Fold: {result.mean():.4f}')
+# %%
 df_predict = y_test.to_frame()
 df_predict['Predict Reg Log'] = reg_predict
 df_predict['Proba Reg Log'] = reg_predict_proba[:, 1]
 # %%
 # Matriz de Confusão
-pd.crosstab(df_predict['Fechamento'], df_predict['Predict Reg Log'])
+pd.crosstab(df_predict['Fechamento'], df_predict['Predict Reg Log'], normalize='index')
 # %% Avaliação do modelo - OOT
 reg_predict_oot = reg.predict(X_oot_scaled)
 reg_predict_proba_oot = reg.predict_proba(X_oot_scaled)
@@ -46,7 +63,7 @@ df_predict_oot['Predict Reg Log'] = reg_predict_oot
 df_predict_oot['Proba Reg Log'] = reg_predict_proba_oot[:, 1]
 # %%
 # Matriz de Confusão
-pd.crosstab(df_predict_oot['Fechamento'], df_predict_oot['Predict Reg Log'])
+pd.crosstab(df_predict_oot['Fechamento'], df_predict_oot['Predict Reg Log'], normalize='index')
 # %%
 df_predict_oot
 # %% Acurácias
