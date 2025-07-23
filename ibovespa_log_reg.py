@@ -1,10 +1,15 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
 import joblib
 import matplotlib.pyplot as plt
+# %%
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+
+# Suprimir avisos de convergência
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 # %% Leitura da base final
 df = pd.read_csv('data/ABT_IBOVESPA.csv')
 # %% Separação OUT OF TIME
