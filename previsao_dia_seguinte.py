@@ -15,12 +15,12 @@ df['Data'] = pd.to_datetime(df['Data'], format='%Y-%m-%d')
 # %%
 # Colunas usadas no modelo
 colunas_modelo = [
-    'Abertura_Lag1', 'Máxima_Lag1', 'Mínima_Lag1',
-    'Volume_Lag1', 'Último_Lag1', 'Fechamento_Lag1', 'Abertura_Media5', 'Máxima_Media5',
-    'Mínima_Media5', 'Fechamento_Media5', 'Volume_Media5', 'Último_Media5', 'Volatilidade5',
-    'Abertura_Media10', 'Máxima_Media10', 'Mínima_Media10',
-    'Fechamento_Media10', 'Volume_Media10', 'Último_Media10', 'Volatilidade10', 
-    'Variação_Dia_Anterior_Lag1', 'Tendencia_5_10'
+    'Abertura_Lag1','Máxima_Lag1','Mínima_Lag1','Fechamento_Lag1',
+    'Volume_Lag1','Último_Lag1','Abertura_Media5','Máxima_Media5',
+    'Mínima_Media5','Fechamento_Media5','Volume_Media5','Último_Media5',
+    'Volatilidade5','Abertura_Media10','Máxima_Media10','Mínima_Media10',
+    'Fechamento_Media10','Volume_Media10','Último_Media10','Volatilidade10',
+    'Variação_Dia_Anterior_Lag1','Tendencia_5_10'
 ]
 # %%
 # Pega a última linha com as features calculadas
