@@ -35,7 +35,7 @@ df_predict = y_test.to_frame()
 df_predict['Predict Reg Log'] = reg_predict
 df_predict['Proba Reg Log'] = reg_predict_proba[:, 1]
 # %%
-# Matriz de Correlação
+# Matriz de Confusão
 pd.crosstab(df_predict['Fechamento'], df_predict['Predict Reg Log'])
 # %% Avaliação do modelo - OOT
 reg_predict_oot = reg.predict(X_oot_scaled)
