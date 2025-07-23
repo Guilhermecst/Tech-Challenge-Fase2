@@ -44,7 +44,7 @@ df['Var%'] = df['Var%'].astype(float)
 df.info()
 # %%
 df = df.sort_values('Data')
-df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0 else 0).shift(-1)
+df['Fechamento'] = df['Var%'].apply(lambda x: 1 if x > 0.005 else 0).shift(-1)
 # 1 = Positivo
 # 0 = Negativo
 # %%
