@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
 import joblib
 import matplotlib.pyplot as plt
@@ -24,7 +25,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 X_oot_scaled = scaler.transform(X_oot)
 # %% Regressão Logística
-reg = LogisticRegression(class_weight='balanced')
+reg = LogisticRegression(class_weight='balanced', C=5)
 reg.fit(X_train_scaled, y_train)
 # %% Avaliação do modelo - TESTE
 reg_predict = reg.predict(X_test_scaled)
@@ -44,7 +45,7 @@ df_predict_oot = y_oot.to_frame()
 df_predict_oot['Predict Reg Log'] = reg_predict_oot
 df_predict_oot['Proba Reg Log'] = reg_predict_proba_oot[:, 1]
 # %%
-# Matriz de Correlação
+# Matriz de Confusão
 pd.crosstab(df_predict_oot['Fechamento'], df_predict_oot['Predict Reg Log'])
 # %%
 df_predict_oot
