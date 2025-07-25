@@ -176,16 +176,6 @@ source .venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-> Caso ainda não tenha, crie um `requirements.txt` com as bibliotecas usadas no projeto, como:
-
-```txt
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-```
-
 ---
 
 ### 4. Gere os dados mais recentes
